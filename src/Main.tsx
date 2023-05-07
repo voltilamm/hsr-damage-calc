@@ -141,6 +141,7 @@ function Main() {
                     label="攻撃キャラLv"
                     type="number"
                     InputLabelProps={{ shrink: true }}
+                    InputProps={{ inputProps: { min: 1 } }}
                     variant="standard"
                   />
                 </Grid>
@@ -152,6 +153,7 @@ function Main() {
                     label="攻撃力"
                     type="number"
                     InputLabelProps={{ shrink: true }}
+                    InputProps={{ inputProps: { min: 0 } }}
                     variant="standard"
                   />
                 </Grid>
@@ -167,6 +169,7 @@ function Main() {
                       endAdornment: (
                         <InputAdornment position="end">%</InputAdornment>
                       ),
+                      inputProps: { min: 0, max: 100 },
                     }}
                     variant="standard"
                   />
@@ -183,6 +186,7 @@ function Main() {
                       endAdornment: (
                         <InputAdornment position="end">%</InputAdornment>
                       ),
+                      inputProps: { min: 0 },
                     }}
                     variant="standard"
                   />
@@ -199,6 +203,7 @@ function Main() {
                       endAdornment: (
                         <InputAdornment position="end">%</InputAdornment>
                       ),
+                      inputProps: { min: 0 },
                     }}
                     variant="standard"
                   />
@@ -215,6 +220,7 @@ function Main() {
                       endAdornment: (
                         <InputAdornment position="end">%</InputAdornment>
                       ),
+                      inputProps: { min: 0 },
                     }}
                     variant="standard"
                   />
@@ -230,6 +236,7 @@ function Main() {
                     label="敵Lv"
                     type="number"
                     InputLabelProps={{ shrink: true }}
+                    InputProps={{ inputProps: { min: 0 } }}
                     variant="standard"
                   />
                 </Grid>
@@ -245,6 +252,7 @@ function Main() {
                       endAdornment: (
                         <InputAdornment position="end">%</InputAdornment>
                       ),
+                      inputProps: { min: 0, max: 100 },
                     }}
                     variant="standard"
                   />
@@ -261,6 +269,7 @@ function Main() {
                       endAdornment: (
                         <InputAdornment position="end">%</InputAdornment>
                       ),
+                      inputProps: { max: 100 },
                     }}
                     variant="standard"
                   />
