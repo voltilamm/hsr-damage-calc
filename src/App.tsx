@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import {
   AppBar,
   Box,
+  Card,
+  CardContent,
+  CardHeader,
   CssBaseline,
   FormControlLabel,
   Grid,
@@ -18,6 +21,8 @@ type FormValues = {
   enemyLevel: number;
   scalingAttribute: number;
   skillMultiplier: number;
+  critRate: number;
+  critDamage: number;
   damageBuff: number;
   defDebuff: number;
   res: number;
@@ -30,7 +35,9 @@ function App() {
       characterLevel: 50,
       enemyLevel: 50,
       scalingAttribute: 2000,
-      skillMultiplier: 100,
+      skillMultiplier: 50,
+      critRate: 5,
+      critDamage: 50,
       damageBuff: 0,
       defDebuff: 0,
       res: 20,
@@ -43,6 +50,8 @@ function App() {
     enemyLevel,
     scalingAttribute,
     skillMultiplier,
+    critRate,
+    critDamage,
     damageBuff,
     defDebuff,
     res,
@@ -52,6 +61,8 @@ function App() {
     "enemyLevel",
     "scalingAttribute",
     "skillMultiplier",
+    "critRate",
+    "critDamage",
     "damageBuff",
     "defDebuff",
     "res",
@@ -79,7 +90,7 @@ function App() {
 
   const toughnessMultiplier = useMemo(() => (broken ? 1 : 0.9), [broken]);
 
-  const damage = useMemo(
+  const minDamage = useMemo(
     () =>
       baseDamage *
       damageMultiplier *
@@ -95,6 +106,16 @@ function App() {
     ]
   );
 
+  const maxDamage = useMemo(
+    () => minDamage * (1 + critDamage / 100),
+    [minDamage, critDamage]
+  );
+
+  const expectedDamage = useMemo(
+    () => (1 - critRate / 100) * minDamage + (critRate / 100) * maxDamage,
+    [critRate, minDamage, maxDamage]
+  );
+
   return (
     <Box>
       <AppBar component="nav" position="sticky">
@@ -105,121 +126,171 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Grid container component="main" spacing={2} sx={{ p: 2 }}>
+      <Grid container component="main" sx={{ p: 2 }}>
         <Grid item xs={12} sm={12} md={6}>
-          <Grid container component="div" spacing={2}>
-            <Grid item xs={6} sm={6} md={3}>
-              <TextField
-                {...register("characterLevel")}
-                fullWidth
-                id="character-level"
-                label="攻撃キャラLv"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3}>
-              <TextField
-                {...register("enemyLevel")}
-                fullWidth
-                id="enemy-level"
-                label="敵Lv"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3}>
-              <TextField
-                {...register("scalingAttribute")}
-                fullWidth
-                id="scaling-attribute"
-                label="攻撃力"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3}>
-              <TextField
-                {...register("skillMultiplier")}
-                fullWidth
-                id="skill-multiplier"
-                label="倍率"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">%</InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3}>
-              <TextField
-                {...register("damageBuff")}
-                fullWidth
-                id="damage-buff"
-                label="ダメージバフ"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">%</InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3}>
-              <TextField
-                {...register("defDebuff")}
-                fullWidth
-                id="def-debuff"
-                label="防御デバフ"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">%</InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3}>
-              <TextField
-                {...register("res")}
-                fullWidth
-                id="res"
-                label="耐性"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">%</InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3}>
-              <FormControlLabel
-                control={<Switch {...register("broken")} color="primary" />}
-                label="弱点撃破"
-              />
-            </Grid>
-          </Grid>
+          <Card sx={{ height: "100%" }}>
+            <CardContent>
+              <Grid container component="div" spacing={2}>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("characterLevel")}
+                    fullWidth
+                    id="character-level"
+                    label="攻撃キャラLv"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("enemyLevel")}
+                    fullWidth
+                    id="enemy-level"
+                    label="敵Lv"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("scalingAttribute")}
+                    fullWidth
+                    id="scaling-attribute"
+                    label="攻撃力"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("skillMultiplier")}
+                    fullWidth
+                    id="skill-multiplier"
+                    label="スキル倍率"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">%</InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("critRate")}
+                    fullWidth
+                    id="crit-rate"
+                    label="会心率"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">%</InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("critDamage")}
+                    fullWidth
+                    id="crit-damage"
+                    label="会心ダメージ"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">%</InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("damageBuff")}
+                    fullWidth
+                    id="damage-buff"
+                    label="ダメージバフ"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">%</InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("defDebuff")}
+                    fullWidth
+                    id="def-debuff"
+                    label="防御デバフ"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">%</InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("res")}
+                    fullWidth
+                    id="res"
+                    label="耐性"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">%</InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <FormControlLabel
+                    control={<Switch {...register("broken")} color="primary" />}
+                    label="弱点撃破"
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Typography variant="h5" component="div">
-            計算結果
-          </Typography>
-          <Typography variant="h6" component="div">
-            ダメージ: {Math.floor(damage)}
-          </Typography>
+          <Card sx={{ height: "100%" }}>
+            <CardHeader
+              title="計算結果"
+              titleTypographyProps={{ variant: "h6" }}
+            />
+            <CardContent>
+              <Typography variant="subtitle1">非会心</Typography>
+              <Typography variant="h4">
+                {Math.floor(minDamage).toLocaleString()}
+              </Typography>
+              <Typography variant="subtitle1">会心</Typography>
+              <Typography variant="h4">
+                {Math.floor(maxDamage).toLocaleString()}
+              </Typography>
+              <Typography variant="subtitle1">期待値</Typography>
+              <Typography variant="h4">
+                {Math.floor(expectedDamage).toLocaleString()}
+              </Typography>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </Box>
