@@ -130,7 +130,13 @@ function App() {
         <Grid item xs={12} sm={12} md={6}>
           <Card sx={{ height: "100%" }}>
             <CardContent>
-              <Grid container component="div" spacing={2}>
+              <Typography mb={1}>キャラクター情報</Typography>
+              <Grid
+                container
+                component="div"
+                spacing={2}
+                sx={{ marginBottom: 4 }}
+              >
                 <Grid item xs={6} sm={6} md={3}>
                   <TextField
                     {...register("characterLevel")}
@@ -144,39 +150,12 @@ function App() {
                 </Grid>
                 <Grid item xs={6} sm={6} md={3}>
                   <TextField
-                    {...register("enemyLevel")}
-                    fullWidth
-                    id="enemy-level"
-                    label="敵Lv"
-                    type="number"
-                    InputLabelProps={{ shrink: true }}
-                    variant="standard"
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                  <TextField
                     {...register("scalingAttribute")}
                     fullWidth
                     id="scaling-attribute"
                     label="攻撃力"
                     type="number"
                     InputLabelProps={{ shrink: true }}
-                    variant="standard"
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                  <TextField
-                    {...register("skillMultiplier")}
-                    fullWidth
-                    id="skill-multiplier"
-                    label="スキル倍率"
-                    type="number"
-                    InputLabelProps={{ shrink: true }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">%</InputAdornment>
-                      ),
-                    }}
                     variant="standard"
                   />
                 </Grid>
@@ -214,6 +193,22 @@ function App() {
                 </Grid>
                 <Grid item xs={6} sm={6} md={3}>
                   <TextField
+                    {...register("skillMultiplier")}
+                    fullWidth
+                    id="skill-multiplier"
+                    label="スキル倍率"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">%</InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
                     {...register("damageBuff")}
                     fullWidth
                     id="damage-buff"
@@ -225,6 +220,20 @@ function App() {
                         <InputAdornment position="end">%</InputAdornment>
                       ),
                     }}
+                    variant="standard"
+                  />
+                </Grid>
+              </Grid>
+              <Typography mb={1}>敵情報</Typography>
+              <Grid container component="div" spacing={2}>
+                <Grid item xs={6} sm={6} md={3}>
+                  <TextField
+                    {...register("enemyLevel")}
+                    fullWidth
+                    id="enemy-level"
+                    label="敵Lv"
+                    type="number"
+                    InputLabelProps={{ shrink: true }}
                     variant="standard"
                   />
                 </Grid>
@@ -277,16 +286,16 @@ function App() {
               titleTypographyProps={{ variant: "h6" }}
             />
             <CardContent>
-              <Typography variant="subtitle1">非会心</Typography>
-              <Typography variant="h4">
+              <Typography variant="subtitle2">非会心</Typography>
+              <Typography variant="h4" mb={1}>
                 {Math.floor(minDamage).toLocaleString()}
               </Typography>
-              <Typography variant="subtitle1">会心</Typography>
-              <Typography variant="h4">
+              <Typography variant="subtitle2">会心</Typography>
+              <Typography variant="h4" mb={1}>
                 {Math.floor(maxDamage).toLocaleString()}
               </Typography>
-              <Typography variant="subtitle1">期待値</Typography>
-              <Typography variant="h4">
+              <Typography variant="subtitle2">期待値</Typography>
+              <Typography variant="h4" mb={1}>
                 {Math.floor(expectedDamage).toLocaleString()}
               </Typography>
             </CardContent>
