@@ -101,7 +101,7 @@ function App() {
         <CssBaseline />
         <Toolbar>
           <Typography variant="h6" component="div">
-            ダメージ計算機
+            崩壊：スターレイル ダメージ計算機
           </Typography>
         </Toolbar>
       </AppBar>
