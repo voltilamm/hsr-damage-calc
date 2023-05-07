@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import {
   AppBar,
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -117,7 +118,7 @@ function App() {
   );
 
   return (
-    <Box>
+    <Box sx={{ minHeight: "100vh" }}>
       <AppBar component="nav" position="sticky">
         <CssBaseline />
         <Toolbar>
@@ -126,17 +127,12 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Grid container component="main" sx={{ p: 2 }}>
+      <Grid container component="main" rowSpacing={2} sx={{ p: 2 }}>
         <Grid item xs={12} sm={12} md={6}>
           <Card sx={{ height: "100%" }}>
             <CardContent>
               <Typography mb={1}>キャラクター情報</Typography>
-              <Grid
-                container
-                component="div"
-                spacing={2}
-                sx={{ marginBottom: 4 }}
-              >
+              <Grid container spacing={2} sx={{ marginBottom: 4 }}>
                 <Grid item xs={6} sm={6} md={3}>
                   <TextField
                     {...register("characterLevel")}
@@ -225,7 +221,7 @@ function App() {
                 </Grid>
               </Grid>
               <Typography mb={1}>敵情報</Typography>
-              <Grid container component="div" spacing={2}>
+              <Grid container spacing={2}>
                 <Grid item xs={6} sm={6} md={3}>
                   <TextField
                     {...register("enemyLevel")}
@@ -297,6 +293,34 @@ function App() {
               <Typography variant="subtitle2">期待値</Typography>
               <Typography variant="h4" mb={1}>
                 {Math.floor(expectedDamage).toLocaleString()}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="body1">
+                参考:
+                <Button
+                  variant="text"
+                  href="https://wikiwiki.jp/star-rail/%E3%83%80%E3%83%A1%E3%83%BC%E3%82%B8%E8%A8%88%E7%AE%97%E5%BC%8F"
+                  target="_blank"
+                  sx={{ textTransform: "none" }}
+                >
+                  崩壊スターレイルwiki
+                </Button>
+              </Typography>
+              <Typography variant="body1">
+                連絡先:
+                <Button
+                  variant="text"
+                  href="https://twitter.com/zwirrfinst"
+                  target="_blank"
+                  sx={{ textTransform: "none" }}
+                >
+                  Twitter
+                </Button>
               </Typography>
             </CardContent>
           </Card>
