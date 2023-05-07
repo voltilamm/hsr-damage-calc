@@ -309,8 +309,8 @@ function Main() {
         <Grid item xs={12} sm={12} md={12}>
           <Card>
             <CardContent>
-              <Typography variant="body1">
-                参考:
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="body1">参考:</Typography>
                 <Button
                   variant="text"
                   href="https://wikiwiki.jp/star-rail/%E3%83%80%E3%83%A1%E3%83%BC%E3%82%B8%E8%A8%88%E7%AE%97%E5%BC%8F"
@@ -319,9 +319,9 @@ function Main() {
                 >
                   崩壊スターレイルwiki
                 </Button>
-              </Typography>
-              <Typography variant="body1">
-                連絡先:
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="body1">連絡先:</Typography>
                 <Button
                   variant="text"
                   href="https://twitter.com/zwirrfinst"
@@ -330,7 +330,7 @@ function Main() {
                 >
                   Twitter
                 </Button>
-              </Typography>
+              </Box>
             </CardContent>
           </Card>
         </Grid>
